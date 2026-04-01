@@ -4,7 +4,8 @@ export default function Home() {
   return (
     <PageShell
       title="Inicio"
-      description="Base inicial de Ruzafa App. Usa la navegación superior para recorrer las secciones."
+      description="Gestión financiera clara y ordenada para tu emprendimiento. Usa la navegación para entrar a cada módulo."
+      icon="home"
     />
   );
 }

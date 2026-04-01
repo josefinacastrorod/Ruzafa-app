@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { AppIcon } from "@/components/ui/app-icon";
+import { PageHeader } from "@/components/ui/page-header";
 import { MonthlyComparisonChart } from "@/components/monthly-history/monthly-comparison-chart";
 import { listHistoricalMonthlySummary, type HistoricalMonthSummary } from "@/services/monthly-history";
 
@@ -62,7 +64,7 @@ type MonthCardProps = {
 
 function MonthCard({ monthSummary }: MonthCardProps) {
   return (
-    <details className="app-card p-4" open>
+    <details className="app-card p-4 sm:p-5" open>
       <summary className="flex cursor-pointer list-none items-center justify-between gap-3">
         <div>
           <h3 className="text-base font-semibold capitalize text-slate-900">
@@ -70,7 +72,7 @@ function MonthCard({ monthSummary }: MonthCardProps) {
           </h3>
           <p className="mt-1 text-xs text-slate-500">Ganancia real: {formatCurrency(monthSummary.realProfit)}</p>
         </div>
-        <span className="rounded-lg border border-indigo-100 bg-indigo-50 px-2.5 py-1 text-xs font-medium text-indigo-700">
+        <span className="app-soft-badge">
           {monthSummary.month}
         </span>
       </summary>
@@ -90,27 +92,39 @@ function MonthCard({ monthSummary }: MonthCardProps) {
           </div>
         )}
 
-        <div className="grid gap-3 sm:grid-cols-2">
-          <article className="app-metric-card">
-            <p className="app-metric-label">Ventas totales</p>
+        <div className="app-grid-4">
+          <article className="app-metric-card app-metric-sales">
+            <div className="flex items-center justify-between gap-2">
+              <p className="app-metric-label">Ventas totales</p>
+              <AppIcon name="sales" className="h-4 w-4 text-emerald-700" />
+            </div>
             <p className="app-metric-value">{formatCurrency(monthSummary.salesTotal)}</p>
           </article>
-          <article className="app-metric-card">
-            <p className="app-metric-label">Costos totales</p>
+          <article className="app-metric-card app-metric-cost">
+            <div className="flex items-center justify-between gap-2">
+              <p className="app-metric-label">Costos totales</p>
+              <AppIcon name="costs" className="h-4 w-4 text-amber-700" />
+            </div>
             <p className="app-metric-value">{formatCurrency(monthSummary.costsTotal)}</p>
           </article>
-          <article className="app-metric-card">
-            <p className="app-metric-label">Gastos totales</p>
+          <article className="app-metric-card app-metric-expense">
+            <div className="flex items-center justify-between gap-2">
+              <p className="app-metric-label">Gastos totales</p>
+              <AppIcon name="expenses" className="h-4 w-4 text-orange-700" />
+            </div>
             <p className="app-metric-value">{formatCurrency(monthSummary.expensesTotal)}</p>
           </article>
           <article className="app-metric-card app-metric-highlight">
-            <p className="app-metric-label">Ganancia real</p>
+            <div className="flex items-center justify-between gap-2">
+              <p className="app-metric-label">Ganancia real</p>
+              <AppIcon name="summary" className="h-4 w-4 text-white/80" />
+            </div>
             <p className="app-metric-value">{formatCurrency(monthSummary.realProfit)}</p>
           </article>
         </div>
 
-        <div className="grid gap-3 sm:grid-cols-2">
-          <article className="app-metric-card">
+        <div className="app-grid-3">
+          <article className="app-metric-card app-metric-saving">
             <p className="app-metric-label">Monto fijo guardado</p>
             <p className="app-metric-value">
               {monthSummary.fixedAmountToKeep === null
@@ -268,13 +282,11 @@ export function MonthlyHistoryModule() {
 
   return (
     <section className="app-page">
-      <div className="app-card p-5">
-        <h1 className="app-title">Historial financiero</h1>
-        <p className="app-subtitle">
-          Consulta el resumen de cada mes usando las fechas de ventas, costos y gastos. Cada etapa
-          mensual queda guardada sin afectar los meses anteriores.
-        </p>
-      </div>
+      <PageHeader
+        title="Historial financiero"
+        description="Consulta el resumen de cada mes usando las fechas de ventas, costos y gastos. Cada etapa mensual queda guardada sin afectar los meses anteriores."
+        icon="history"
+      />
 
       {isLoading ? (
         <div className="app-card p-5">
@@ -293,7 +305,7 @@ export function MonthlyHistoryModule() {
         </div>
       ) : (
         <>
-          <div className="app-card p-5">
+          <div className="app-card p-5 sm:p-6">
             <h2 className="app-section-title">Filtros</h2>
             <div className="mt-4 grid gap-3 sm:grid-cols-2">
               <div>
@@ -346,7 +358,7 @@ export function MonthlyHistoryModule() {
             </div>
           </div>
 
-          <div className="app-card p-5">
+          <div className="app-card p-5 sm:p-6">
             <h2 className="app-section-title">Gráfico comparativo mensual</h2>
             <p className="mt-2 text-sm text-slate-600">
               Comparación por mes de ventas, costos, gastos y ganancia real.

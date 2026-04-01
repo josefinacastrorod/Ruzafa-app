@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { AppIcon } from "@/components/ui/app-icon";
+import { PageHeader } from "@/components/ui/page-header";
 import type { Database } from "@/types/database";
 import {
   createFinancialSetting,
@@ -171,16 +173,17 @@ export function FinancialSettingsModule() {
 
   return (
     <section className="app-page">
-      <div className="app-card p-5">
-        <h1 className="app-title">Configuración financiera</h1>
-        <p className="app-subtitle">
-          Define el monto fijo mensual a apartar y cómo distribuir el restante entre retiros y
-          ahorros. Las configuraciones anteriores se mantienen como historial.
-        </p>
-      </div>
+      <PageHeader
+        title="Configuración financiera"
+        description="Define el monto fijo mensual a apartar y cómo distribuir el restante entre retiros y ahorros. Las configuraciones anteriores se mantienen como historial."
+        icon="settings"
+      />
 
-      <div className="app-card p-5">
+      <div className="app-card p-5 sm:p-6">
         <h2 className="app-section-title">Nueva configuración</h2>
+        <p className="app-panel-subtitle">
+          Los cambios aplican desde la fecha de inicio y no alteran meses anteriores.
+        </p>
 
         <form onSubmit={handleSubmit} className="mt-4 space-y-4">
           <div>
@@ -287,7 +290,7 @@ export function FinancialSettingsModule() {
         </form>
       </div>
 
-      <div className="app-card p-5">
+      <div className="app-card p-5 sm:p-6">
         <h2 className="app-section-title">Historial de configuraciones</h2>
 
         {isLoadingSettings ? (
@@ -299,11 +302,12 @@ export function FinancialSettingsModule() {
             {settings.map((setting, index) => (
               <article key={setting.id} className="app-list-item">
                 <div className="flex flex-wrap items-center justify-between gap-2">
-                  <p className="text-sm font-semibold text-slate-900">
+                  <p className="inline-flex items-center gap-2 text-sm font-semibold text-slate-900">
+                    <AppIcon name="settings" className="h-4 w-4 text-indigo-700" />
                     Inicio: {formatDate(setting.start_date)}
                   </p>
                   {index === 0 && (
-                    <span className="rounded-full border border-emerald-300 bg-emerald-50 px-2 py-0.5 text-xs font-medium text-emerald-800">
+                    <span className="rounded-full border border-emerald-300 bg-emerald-50 px-2 py-0.5 text-xs font-semibold text-emerald-800">
                       Más reciente
                     </span>
                   )}

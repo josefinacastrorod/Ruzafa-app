@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { AppIcon } from "@/components/ui/app-icon";
+import { PageHeader } from "@/components/ui/page-header";
 import { listCostsByMonth } from "@/services/costs";
 import { listExpensesByMonth } from "@/services/expenses";
 import { getCurrentMonthValue, listSalesByMonth } from "@/services/sales";
@@ -97,14 +99,13 @@ export function WithdrawalsModule() {
 
   return (
     <section className="app-page">
-      <div className="app-card p-5">
-        <h1 className="app-title">Retiros</h1>
-        <p className="app-subtitle">
-          Calcula el retiro sugerido según ventas, costos y gastos reales del mes.
-        </p>
-      </div>
+      <PageHeader
+        title="Retiros"
+        description="Calcula el retiro sugerido según ventas, costos y gastos reales del mes."
+        icon="withdrawals"
+      />
 
-      <div className="app-card p-5">
+      <div className="app-card p-5 sm:p-6">
         <label htmlFor="withdrawals-month" className="app-label">
           Mes
         </label>
@@ -117,7 +118,7 @@ export function WithdrawalsModule() {
         />
       </div>
 
-      <div className="app-card p-5">
+      <div className="app-card p-5 sm:p-6">
         <h2 className="app-section-title">Resumen del mes</h2>
 
         {isLoading ? (
@@ -127,28 +128,40 @@ export function WithdrawalsModule() {
             {loadError}
           </div>
         ) : (
-          <div className="mt-4 grid gap-3">
-            <article className="app-metric-card">
-              <p className="app-metric-label">Ventas totales</p>
+          <div className="mt-4 app-grid-4">
+            <article className="app-metric-card app-metric-sales">
+              <div className="flex items-center justify-between gap-2">
+                <p className="app-metric-label">Ventas totales</p>
+                <AppIcon name="sales" className="h-4 w-4 text-emerald-700" />
+              </div>
               <p className="app-metric-value">{formatCurrency(totals.sales)}</p>
             </article>
-            <article className="app-metric-card">
-              <p className="app-metric-label">Costos totales</p>
+            <article className="app-metric-card app-metric-cost">
+              <div className="flex items-center justify-between gap-2">
+                <p className="app-metric-label">Costos totales</p>
+                <AppIcon name="costs" className="h-4 w-4 text-amber-700" />
+              </div>
               <p className="app-metric-value">{formatCurrency(totals.costs)}</p>
             </article>
-            <article className="app-metric-card">
-              <p className="app-metric-label">Gastos totales</p>
+            <article className="app-metric-card app-metric-expense">
+              <div className="flex items-center justify-between gap-2">
+                <p className="app-metric-label">Gastos totales</p>
+                <AppIcon name="expenses" className="h-4 w-4 text-orange-700" />
+              </div>
               <p className="app-metric-value">{formatCurrency(totals.expenses)}</p>
             </article>
             <article className="app-metric-card app-metric-highlight">
-              <p className="app-metric-label">Ganancia real disponible</p>
+              <div className="flex items-center justify-between gap-2">
+                <p className="app-metric-label">Ganancia real disponible</p>
+                <AppIcon name="summary" className="h-4 w-4 text-white/80" />
+              </div>
               <p className="app-metric-value">{formatCurrency(realProfit)}</p>
             </article>
           </div>
         )}
       </div>
 
-      <div className="app-card p-5">
+      <div className="app-card p-5 sm:p-6">
         <h2 className="app-section-title">Calculadora de retiro</h2>
 
         <div className="mt-4 space-y-3">

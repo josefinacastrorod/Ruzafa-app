@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { AppIcon } from "@/components/ui/app-icon";
+import { PageHeader } from "@/components/ui/page-header";
 import type { Database } from "@/types/database";
 import {
   createCost,
@@ -188,14 +190,13 @@ export function CostsModule() {
 
   return (
     <section className="app-page">
-      <div className="app-card p-5">
-        <h1 className="app-title">Costos</h1>
-        <p className="app-subtitle">
-          Registra y gestiona tus costos mensuales.
-        </p>
-      </div>
+      <PageHeader
+        title="Costos"
+        description="Registra y gestiona tus costos mensuales."
+        icon="costs"
+      />
 
-      <div className="app-card p-5">
+      <div className="app-card p-5 sm:p-6">
         <label htmlFor="costs-month" className="app-label">
           Filtrar por mes
         </label>
@@ -211,10 +212,13 @@ export function CostsModule() {
         />
       </div>
 
-      <div className="app-card p-5">
+      <div className="app-card p-5 sm:p-6">
         <h2 className="app-section-title">
           {editingCostId ? "Editar costo" : "Nuevo costo"}
         </h2>
+        <p className="app-panel-subtitle">
+          Registra costos directos y clasifícalos para revisar mejor la estructura mensual.
+        </p>
 
         <form onSubmit={handleSubmit} className="mt-4 space-y-4">
           <div>
@@ -328,7 +332,7 @@ export function CostsModule() {
         </div>
       )}
 
-      <div className="app-card p-5">
+      <div className="app-card p-5 sm:p-6">
         <div className="flex items-center justify-between gap-3">
           <h2 className="app-section-title">Listado de costos</h2>
           <p className="text-sm text-slate-500">Ordenados por fecha (desc)</p>
@@ -349,7 +353,10 @@ export function CostsModule() {
               >
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                   <div>
-                    <p className="font-medium text-slate-900">{cost.name}</p>
+                    <div className="flex items-center gap-2">
+                      <AppIcon name="costs" className="h-4 w-4 text-amber-700" />
+                      <p className="font-semibold text-slate-900">{cost.name}</p>
+                    </div>
                     <p className="text-sm text-slate-600">{formatDate(cost.date)}</p>
                     {cost.category && (
                       <p className="mt-1 text-sm text-slate-700">
@@ -361,7 +368,7 @@ export function CostsModule() {
                     )}
                   </div>
                   <div className="sm:text-right">
-                    <p className="text-base font-semibold text-slate-900">
+                    <p className="text-lg font-bold text-amber-700">
                       {formatAmount(cost.amount)}
                     </p>
                     <div className="mt-3 flex gap-2 sm:justify-end">

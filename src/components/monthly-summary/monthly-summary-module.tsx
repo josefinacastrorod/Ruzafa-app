@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { AppIcon } from "@/components/ui/app-icon";
+import { PageHeader } from "@/components/ui/page-header";
 import {
   calculateRealProfit,
   calculateRemainingAfterFixedAmount,
@@ -116,14 +118,13 @@ export function MonthlySummaryModule() {
 
   return (
     <section className="app-page">
-      <div className="app-card p-5">
-        <h1 className="app-title">Resumen mensual</h1>
-        <p className="app-subtitle">
-          Visualiza el resultado real del mes y aplica la configuración financiera vigente.
-        </p>
-      </div>
+      <PageHeader
+        title="Resumen mensual"
+        description="Visualiza el resultado real del mes y aplica la configuración financiera vigente."
+        icon="summary"
+      />
 
-      <div className="app-card p-5">
+      <div className="app-card p-5 sm:p-6">
         <label htmlFor="summary-month" className="app-label">
           Mes
         </label>
@@ -136,7 +137,7 @@ export function MonthlySummaryModule() {
         />
       </div>
 
-      <div className="app-card p-5">
+      <div className="app-card p-5 sm:p-6">
         <h2 className="app-section-title">Detalle del mes</h2>
 
         {isLoading ? (
@@ -160,21 +161,33 @@ export function MonthlySummaryModule() {
               </div>
             )}
 
-            <div className="grid gap-3">
-              <article className="app-metric-card">
-                <p className="app-metric-label">Ventas totales</p>
+            <div className="app-grid-4">
+              <article className="app-metric-card app-metric-sales">
+                <div className="flex items-center justify-between gap-2">
+                  <p className="app-metric-label">Ventas totales</p>
+                  <AppIcon name="sales" className="h-4 w-4 text-emerald-700" />
+                </div>
                 <p className="app-metric-value">{formatCurrency(totals.sales)}</p>
               </article>
-              <article className="app-metric-card">
-                <p className="app-metric-label">Costos totales</p>
+              <article className="app-metric-card app-metric-cost">
+                <div className="flex items-center justify-between gap-2">
+                  <p className="app-metric-label">Costos totales</p>
+                  <AppIcon name="costs" className="h-4 w-4 text-amber-700" />
+                </div>
                 <p className="app-metric-value">{formatCurrency(totals.costs)}</p>
               </article>
-              <article className="app-metric-card">
-                <p className="app-metric-label">Gastos totales</p>
+              <article className="app-metric-card app-metric-expense">
+                <div className="flex items-center justify-between gap-2">
+                  <p className="app-metric-label">Gastos totales</p>
+                  <AppIcon name="expenses" className="h-4 w-4 text-orange-700" />
+                </div>
                 <p className="app-metric-value">{formatCurrency(totals.expenses)}</p>
               </article>
               <article className="app-metric-card app-metric-highlight">
-                <p className="app-metric-label">Ganancia real</p>
+                <div className="flex items-center justify-between gap-2">
+                  <p className="app-metric-label">Ganancia real</p>
+                  <AppIcon name="summary" className="h-4 w-4 text-white/80" />
+                </div>
                 <p className="app-metric-value">{formatCurrency(realProfit)}</p>
               </article>
             </div>
@@ -186,8 +199,8 @@ export function MonthlySummaryModule() {
               </div>
             )}
 
-            <div className="grid gap-3">
-              <article className="app-metric-card">
+            <div className="app-grid-3">
+              <article className="app-metric-card app-metric-saving">
                 <p className="app-metric-label">Monto fijo a guardar</p>
                 <p className="app-metric-value">
                   {setting ? formatCurrency(setting.fixed_amount_to_keep) : "-"}
@@ -199,7 +212,7 @@ export function MonthlySummaryModule() {
                   {setting ? formatCurrency(remainingAfterFixedAmount) : "-"}
                 </p>
               </article>
-              <article className="app-metric-card">
+              <article className="app-metric-card app-metric-highlight">
                 <p className="app-metric-label">Retiro sugerido</p>
                 <p className="app-metric-value">
                   {setting ? formatCurrency(suggestedWithdrawal) : "-"}
@@ -208,7 +221,7 @@ export function MonthlySummaryModule() {
                   % aplicado: {setting ? formatPercentage(setting.withdrawal_percentage) : "-"}
                 </p>
               </article>
-              <article className="app-metric-card">
+              <article className="app-metric-card app-metric-saving">
                 <p className="app-metric-label">Ahorros sugeridos</p>
                 <p className="app-metric-value">
                   {setting ? formatCurrency(suggestedSavings) : "-"}

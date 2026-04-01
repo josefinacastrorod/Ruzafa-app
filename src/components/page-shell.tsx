@@ -1,13 +1,12 @@
+import type { AppIconName } from "@/components/ui/app-icon";
+import { PageHeader } from "@/components/ui/page-header";
+
 type PageShellProps = {
   title: string;
   description: string;
+  icon?: AppIconName;
 };
 
-export function PageShell({ title, description }: PageShellProps) {
-  return (
-    <section className="app-card p-6">
-      <h1 className="app-title">{title}</h1>
-      <p className="app-subtitle">{description}</p>
-    </section>
-  );
+export function PageShell({ title, description, icon = "home" }: PageShellProps) {
+  return <PageHeader title={title} description={description} icon={icon} />;
 }

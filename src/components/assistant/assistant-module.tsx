@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { AppIcon } from "@/components/ui/app-icon";
+import { PageHeader } from "@/components/ui/page-header";
 import { listHistoricalMonthlySummary, type HistoricalMonthSummary } from "@/services/monthly-history";
 
 function formatCurrency(amount: number) {
@@ -94,12 +96,11 @@ export function AssistantModule() {
 
   return (
     <section className="app-page">
-      <div className="app-card p-5">
-        <h1 className="app-title">Asistente interno</h1>
-        <p className="app-subtitle">
-          Análisis automático usando solo datos internos del historial mensual (sin IA externa).
-        </p>
-      </div>
+      <PageHeader
+        title="Asistente interno"
+        description="Análisis automático usando solo datos internos del historial mensual (sin IA externa)."
+        icon="assistant"
+      />
 
       {isLoading ? (
         <div className="app-card p-5">
@@ -118,26 +119,38 @@ export function AssistantModule() {
         </div>
       ) : (
         <>
-          <div className="grid gap-3">
-            <article className="app-metric-card">
-              <p className="app-metric-label">Ventas acumuladas</p>
+          <div className="app-grid-4">
+            <article className="app-metric-card app-metric-sales">
+              <div className="flex items-center justify-between gap-2">
+                <p className="app-metric-label">Ventas acumuladas</p>
+                <AppIcon name="sales" className="h-4 w-4 text-emerald-700" />
+              </div>
               <p className="app-metric-value">{formatCurrency(totals.sales)}</p>
             </article>
-            <article className="app-metric-card">
-              <p className="app-metric-label">Costos acumulados</p>
+            <article className="app-metric-card app-metric-cost">
+              <div className="flex items-center justify-between gap-2">
+                <p className="app-metric-label">Costos acumulados</p>
+                <AppIcon name="costs" className="h-4 w-4 text-amber-700" />
+              </div>
               <p className="app-metric-value">{formatCurrency(totals.costs)}</p>
             </article>
-            <article className="app-metric-card">
-              <p className="app-metric-label">Gastos acumulados</p>
+            <article className="app-metric-card app-metric-expense">
+              <div className="flex items-center justify-between gap-2">
+                <p className="app-metric-label">Gastos acumulados</p>
+                <AppIcon name="expenses" className="h-4 w-4 text-orange-700" />
+              </div>
               <p className="app-metric-value">{formatCurrency(totals.expenses)}</p>
             </article>
             <article className="app-metric-card app-metric-highlight">
-              <p className="app-metric-label">Ganancia real acumulada</p>
+              <div className="flex items-center justify-between gap-2">
+                <p className="app-metric-label">Ganancia real acumulada</p>
+                <AppIcon name="summary" className="h-4 w-4 text-white/80" />
+              </div>
               <p className="app-metric-value">{formatCurrency(totals.realProfit)}</p>
             </article>
           </div>
 
-          <div className="app-card p-5">
+          <div className="app-card p-5 sm:p-6">
             <h2 className="app-section-title">Lectura del historial</h2>
             <div className="mt-4 space-y-3 text-sm text-slate-700">
               {bestMonth && (
@@ -160,7 +173,7 @@ export function AssistantModule() {
             </div>
           </div>
 
-          <div className="app-card p-5">
+          <div className="app-card p-5 sm:p-6">
             <h2 className="app-section-title">Alertas de configuración</h2>
             {monthsWithoutSettings.length === 0 ? (
               <div className="mt-4 app-feedback-success">

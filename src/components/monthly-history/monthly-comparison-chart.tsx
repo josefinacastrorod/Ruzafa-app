@@ -11,10 +11,10 @@ type ChartSeries = {
 };
 
 const chartSeries: ChartSeries[] = [
-  { key: "salesTotal", label: "Ventas", color: "#4f46e5" },
-  { key: "costsTotal", label: "Costos", color: "#dc2626" },
-  { key: "expensesTotal", label: "Gastos", color: "#ea580c" },
-  { key: "realProfit", label: "Ganancia real", color: "#059669" },
+  { key: "salesTotal", label: "Ventas", color: "#0d8f65" },
+  { key: "costsTotal", label: "Costos", color: "#c7651a" },
+  { key: "expensesTotal", label: "Gastos", color: "#b04b2d" },
+  { key: "realProfit", label: "Ganancia real", color: "#3d4ecc" },
 ];
 
 function formatMonthShort(month: string) {
@@ -89,14 +89,14 @@ export function MonthlyComparisonChart({ data }: MonthlyComparisonChartProps) {
         ))}
       </div>
 
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto rounded-2xl border border-slate-200 bg-white/90 p-2">
         <svg
           role="img"
           aria-label="Comparación mensual de ventas, costos, gastos y ganancia real"
           viewBox={`0 0 ${chartWidth} ${chartHeight}`}
           className="min-w-full"
         >
-          <rect x="0" y="0" width={chartWidth} height={chartHeight} fill="#ffffff" rx="14" />
+          <rect x="0" y="0" width={chartWidth} height={chartHeight} fill="#fdfdff" rx="14" />
 
           {gridValues.map((value, index) => {
             const y = getY(value);
@@ -107,7 +107,7 @@ export function MonthlyComparisonChart({ data }: MonthlyComparisonChartProps) {
                   y1={y}
                   x2={chartWidth - rightPadding}
                   y2={y}
-                  stroke="#e5e7eb"
+                  stroke="#dde4f0"
                   strokeWidth="1"
                 />
                 <text
@@ -115,7 +115,7 @@ export function MonthlyComparisonChart({ data }: MonthlyComparisonChartProps) {
                   y={y + 4}
                   textAnchor="end"
                   fontSize="10"
-                  fill="#6b7280"
+                  fill="#64748b"
                 >
                   {new Intl.NumberFormat("es-CL", { notation: "compact" }).format(value)}
                 </text>
@@ -128,7 +128,7 @@ export function MonthlyComparisonChart({ data }: MonthlyComparisonChartProps) {
             y1={zeroY}
             x2={chartWidth - rightPadding}
             y2={zeroY}
-            stroke="#94a3b8"
+            stroke="#8b98b2"
             strokeWidth="1.5"
             strokeDasharray="3 3"
           />

@@ -1,59 +1,37 @@
-import Link from "next/link";
+import { AppIcon } from "@/components/ui/app-icon";
+import { PageHeader } from "@/components/ui/page-header";
 
 export default function DashboardPage() {
+  const metrics = [
+    { label: "Ventas del mes", value: "-", icon: "sales", tone: "app-metric-sales" },
+    { label: "Costos del mes", value: "-", icon: "costs", tone: "app-metric-cost" },
+    { label: "Gastos del mes", value: "-", icon: "expenses", tone: "app-metric-expense" },
+    { label: "Retiros del mes", value: "-", icon: "withdrawals", tone: "app-metric-saving" },
+    { label: "Utilidad estimada", value: "-", icon: "summary", tone: "app-metric-highlight" },
+    { label: "Disponible estimado", value: "-", icon: "dashboard", tone: "app-metric-highlight" },
+  ] as const;
+
   return (
     <section className="app-page">
-      <div className="app-card p-5">
-        <h1 className="app-title">Dashboard</h1>
-        <p className="app-subtitle">
-          Vista rápida de tus módulos financieros. Revisa cada sección para cargar o editar datos.
-        </p>
-      </div>
+      <PageHeader
+        title="Dashboard"
+        description="Resumen financiero general del mes actual."
+        icon="dashboard"
+      />
 
-      <div className="grid gap-3">
-        <article className="app-metric-card">
-          <p className="app-metric-label">Ventas del mes</p>
-          <p className="app-metric-value">-</p>
-        </article>
-        <article className="app-metric-card">
-          <p className="app-metric-label">Costos del mes</p>
-          <p className="app-metric-value">-</p>
-        </article>
-        <article className="app-metric-card">
-          <p className="app-metric-label">Gastos del mes</p>
-          <p className="app-metric-value">-</p>
-        </article>
-        <article className="app-metric-card app-metric-highlight">
-          <p className="app-metric-label">Utilidad estimada</p>
-          <p className="app-metric-value">-</p>
-        </article>
-      </div>
-
-      <div className="app-card p-5">
-        <h2 className="app-section-title">Accesos rápidos</h2>
-        <div className="mt-4 grid grid-cols-2 gap-2">
-          <Link className="app-btn-secondary text-center" href="/ventas">
-            Ventas
-          </Link>
-          <Link className="app-btn-secondary text-center" href="/costos">
-            Costos
-          </Link>
-          <Link className="app-btn-secondary text-center" href="/gastos">
-            Gastos
-          </Link>
-          <Link className="app-btn-secondary text-center" href="/retiros">
-            Retiros
-          </Link>
-          <Link className="app-btn-secondary text-center" href="/resumen-mensual">
-            Resumen
-          </Link>
-          <Link className="app-btn-secondary text-center" href="/historial">
-            Historial
-          </Link>
-          <Link className="app-btn-secondary text-center" href="/configuracion-financiera">
-            Configuración
-          </Link>
-        </div>
+      <div className="app-grid-3">
+        {metrics.map((metric) => (
+          <article key={metric.label} className={`app-metric-card ${metric.tone}`}>
+            <div className="flex items-center justify-between gap-3">
+              <p className="app-metric-label">{metric.label}</p>
+              <AppIcon
+                name={metric.icon}
+                className={`h-4 w-4 ${metric.tone === "app-metric-highlight" ? "text-white/80" : "text-slate-500"}`}
+              />
+            </div>
+            <p className="app-metric-value">{metric.value}</p>
+          </article>
+        ))}
       </div>
     </section>
   );

@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { AppIcon } from "@/components/ui/app-icon";
+import { PageHeader } from "@/components/ui/page-header";
 import type { Database } from "@/types/database";
 import {
   createSale,
@@ -184,14 +186,13 @@ export function SalesModule() {
 
   return (
     <section className="app-page">
-      <div className="app-card p-5">
-        <h1 className="app-title">Ventas</h1>
-        <p className="app-subtitle">
-          Registra y gestiona tus ventas mensuales.
-        </p>
-      </div>
+      <PageHeader
+        title="Ventas"
+        description="Registra y gestiona tus ventas mensuales."
+        icon="sales"
+      />
 
-      <div className="app-card p-5">
+      <div className="app-card p-5 sm:p-6">
         <label htmlFor="sales-month" className="app-label">
           Filtrar por mes
         </label>
@@ -207,10 +208,13 @@ export function SalesModule() {
         />
       </div>
 
-      <div className="app-card p-5">
+      <div className="app-card p-5 sm:p-6">
         <h2 className="app-section-title">
           {editingSaleId ? "Editar venta" : "Nueva venta"}
         </h2>
+        <p className="app-panel-subtitle">
+          Completa los datos para guardar el movimiento en el mes seleccionado.
+        </p>
 
         <form onSubmit={handleSubmit} className="mt-4 space-y-4">
           <div>
@@ -310,7 +314,7 @@ export function SalesModule() {
         </div>
       )}
 
-      <div className="app-card p-5">
+      <div className="app-card p-5 sm:p-6">
         <div className="flex items-center justify-between gap-3">
           <h2 className="app-section-title">Listado de ventas</h2>
           <p className="text-sm text-slate-500">Ordenadas por fecha (desc)</p>
@@ -331,14 +335,17 @@ export function SalesModule() {
               >
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                   <div>
-                    <p className="font-medium text-slate-900">{sale.name}</p>
+                    <div className="flex items-center gap-2">
+                      <AppIcon name="sales" className="h-4 w-4 text-emerald-700" />
+                      <p className="font-semibold text-slate-900">{sale.name}</p>
+                    </div>
                     <p className="text-sm text-slate-600">{formatDate(sale.date)}</p>
                     {sale.note && (
                       <p className="mt-2 text-sm text-slate-700">{sale.note}</p>
                     )}
                   </div>
                   <div className="sm:text-right">
-                    <p className="text-base font-semibold text-slate-900">
+                    <p className="text-lg font-bold text-emerald-700">
                       {formatAmount(sale.amount)}
                     </p>
                     <div className="mt-3 flex gap-2 sm:justify-end">

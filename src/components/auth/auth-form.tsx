@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
+import { PageHeader } from "@/components/ui/page-header";
 import { useAuth } from "@/hooks/use-auth";
 import { validateCredentials } from "@/services/auth";
 
@@ -64,17 +65,19 @@ export function AuthForm({ mode }: AuthFormProps) {
   const isLogin = mode === "login";
 
   return (
-    <section className="mx-auto w-full max-w-md app-card p-6">
-      <h1 className="app-title">
-        {isLogin ? "Iniciar sesión" : "Crear cuenta"}
-      </h1>
-      <p className="app-subtitle">
-        {isLogin
-          ? "Ingresa tus credenciales para acceder al panel."
-          : "Registra tu cuenta para comenzar a usar la app."}
-      </p>
+    <section className="mx-auto w-full max-w-lg space-y-4">
+      <PageHeader
+        title={isLogin ? "Iniciar sesión" : "Crear cuenta"}
+        description={
+          isLogin
+            ? "Ingresa tus credenciales para acceder al panel."
+            : "Registra tu cuenta para comenzar a usar la app."
+        }
+        icon="auth"
+      />
 
-      <form className="mt-6 space-y-4" onSubmit={handleSubmit} noValidate>
+      <div className="app-card p-5 sm:p-6">
+        <form className="space-y-4" onSubmit={handleSubmit} noValidate>
         <div>
           <label htmlFor="email" className="app-label">
             Email
@@ -136,17 +139,18 @@ export function AuthForm({ mode }: AuthFormProps) {
               ? "Ingresar"
               : "Crear cuenta"}
         </button>
-      </form>
+        </form>
 
-      <p className="mt-4 text-sm text-slate-600">
-        {isLogin ? "¿No tienes cuenta? " : "¿Ya tienes cuenta? "}
-        <Link
-          href={isLogin ? "/registro" : "/login"}
-          className="font-semibold text-indigo-700 underline"
-        >
-          {isLogin ? "Regístrate" : "Inicia sesión"}
-        </Link>
-      </p>
+        <p className="mt-4 text-sm text-slate-600">
+          {isLogin ? "¿No tienes cuenta? " : "¿Ya tienes cuenta? "}
+          <Link
+            href={isLogin ? "/registro" : "/login"}
+            className="font-semibold text-indigo-700 underline"
+          >
+            {isLogin ? "Regístrate" : "Inicia sesión"}
+          </Link>
+        </p>
+      </div>
     </section>
   );
 }

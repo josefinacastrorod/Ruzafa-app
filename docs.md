@@ -1,7 +1,7 @@
 # Estado del proyecto
 
 ## Fecha de actualización
-2026-03-31
+2026-04-01
 
 ## Etapas
 - [x] Setup base
@@ -15,6 +15,7 @@
 - [x] Resumen
 - [x] Historial
 - [x] Asistente
+- [x] Rediseño visual UI
 - [ ] Deploy
 
 ## Último avance consolidado
@@ -26,11 +27,31 @@ La app ya incluye flujo completo financiero:
   - disponible = utilidad - retiros
 - Historial extendido con filtros por rango de meses y exportación (CSV + vista lista para impresión/PDF)
 - Asistente interno conectado a datos reales del historial mensual (métricas acumuladas, mejor/peor mes por ganancia real, alertas por meses sin configuración vigente)
+- Rediseño visual integral mobile-first:
+  - nuevo sistema visual global (paleta, cards, formularios, botones, sombras, estados)
+  - navegación superior mejorada con iconos y estado activo destacado
+  - encabezados reutilizables con iconografía por sección
+  - mejoras de presentación en dashboard, movimientos, ventas, costos, gastos, retiros, resumen mensual, historial, configuración y auth
+
+## Navegación y UI (2026-04-01)
+- Navbar simplificado con 5 secciones principales para usuarios autenticados:
+  - Dashboard
+  - Movimientos
+  - Retiros
+  - Resumen
+  - Historial
+- Nueva página `/movimientos` para agrupar accesos a:
+  - Ventas (`/ventas`)
+  - Costos (`/costos`)
+  - Gastos (`/gastos`)
+- Eliminada la sección "Accesos rápidos" del dashboard para reducir duplicación visual.
+- Se mantienen rutas existentes y lógica de negocio sin cambios.
+- Refresh visual aplicado de forma consistente en toda la app sin modificar lógica ni servicios.
 
 ## Estado Git (hoy)
 - Rama actual: `main`
 - Último commit: `040b976` (`Primer push`)
-- Working tree: limpio (sin cambios pendientes antes de esta actualización de docs)
+- Working tree: con cambios locales de navegación/UI sin commit
 
 ## Pendientes operativos
 - Conectar repositorio a Vercel
