@@ -1,22 +1,14 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { AppIcon } from "@/components/ui/app-icon";
 import { PageHeader } from "@/components/ui/page-header";
+import { type MonthlyTotals } from "@/lib/financial-calculations";
 import {
-  calculateRealProfit,
-  calculateRemainingAfterFixedAmount,
-  calculateSuggestedDistribution,
-  type MonthlyTotals,
-  sumRows,
-} from "@/lib/financial-calculations";
-import { listCostsByMonth } from "@/services/costs";
-import { listExpensesByMonth } from "@/services/expenses";
-import { getFinancialSettingForMonth } from "@/services/financial-settings";
-import { getCurrentMonthValue, listSalesByMonth } from "@/services/sales";
-import type { Database } from "@/types/database";
-
-type FinancialSetting = Database["public"]["Tables"]["financial_settings"]["Row"];
+  getMonthlyFinancialSummary,
+  type MonthlyFinancialSummary,
+} from "@/services/monthly-financial-summary";
+import { getCurrentMonthValue } from "@/services/sales";
 
 function formatCurrency(amount: number) {
   return new Intl.NumberFormat("es-CL", {
@@ -54,7 +46,7 @@ export function MonthlySummaryModule() {
   const [selectedMonth, setSelectedMonth] = useState(getCurrentMonthValue());
   const [totals, setTotals] = useState<MonthlyTotals>({ sales: 0, costs: 0, expenses: 0 });
   const [hasTransactions, setHasTransactions] = useState(false);
-  const [setting, setSetting] = useState<FinancialSetting | null>(null);
+  const [summary, setSummary] = useState<MonthlyFinancialSummary | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
 
@@ -63,25 +55,15 @@ export function MonthlySummaryModule() {
     setLoadError(null);
 
     try {
-      const [salesRows, costRows, expenseRows, currentSetting] = await Promise.all([
-        listSalesByMonth(month),
-        listCostsByMonth(month),
-        listExpensesByMonth(month),
-        getFinancialSettingForMonth(month),
-      ]);
-
-      setTotals({
-        sales: sumRows(salesRows),
-        costs: sumRows(costRows),
-        expenses: sumRows(expenseRows),
-      });
-      setHasTransactions(salesRows.length > 0 || costRows.length > 0 || expenseRows.length > 0);
-      setSetting(currentSetting);
+      const nextSummary = await getMonthlyFinancialSummary(month);
+      setSummary(nextSummary);
+      setTotals(nextSummary.totals);
+      setHasTransactions(nextSummary.hasTransactions);
     } catch (error) {
       setLoadError(getErrorMessage(error));
+      setSummary(null);
       setTotals({ sales: 0, costs: 0, expenses: 0 });
       setHasTransactions(false);
-      setSetting(null);
     } finally {
       setIsLoading(false);
     }
@@ -91,30 +73,11 @@ export function MonthlySummaryModule() {
     void loadMonthlySummary(selectedMonth);
   }, [selectedMonth]);
 
-  const realProfit = useMemo(() => {
-    return calculateRealProfit(totals);
-  }, [totals]);
-
-  const fixedAmountToKeep = setting?.fixed_amount_to_keep ?? 0;
-
-  const remainingAfterFixedAmount = useMemo(() => {
-    return calculateRemainingAfterFixedAmount(realProfit, fixedAmountToKeep);
-  }, [fixedAmountToKeep, realProfit]);
-
-  const distribution = useMemo(() => {
-    if (!setting) {
-      return { suggestedWithdrawal: 0, suggestedSavings: 0 };
-    }
-
-    return calculateSuggestedDistribution(
-      remainingAfterFixedAmount,
-      setting.withdrawal_percentage,
-      setting.savings_percentage,
-    );
-  }, [remainingAfterFixedAmount, setting]);
-
-  const suggestedWithdrawal = distribution.suggestedWithdrawal;
-  const suggestedSavings = distribution.suggestedSavings;
+  const realProfit = summary?.realProfit ?? 0;
+  const remainingAfterFixedAmount = summary?.remainingAfterFixedAmount ?? 0;
+  const suggestedWithdrawal = summary?.suggestedWithdrawal ?? 0;
+  const suggestedSavings = summary?.suggestedSavings ?? 0;
+  const setting = summary?.setting ?? null;
 
   return (
     <section className="app-page">

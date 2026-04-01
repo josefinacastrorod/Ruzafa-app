@@ -9,6 +9,7 @@ import { AppIcon } from "@/components/ui/app-icon";
 const appLinks = [
   { href: "/dashboard", label: "Dashboard", icon: "dashboard" as const },
   { href: "/movimientos", label: "Movimientos", icon: "movements" as const },
+  { href: "/costos-por-collar", label: "Costos por collar", icon: "costs" as const },
   { href: "/retiros", label: "Retiros", icon: "withdrawals" as const },
   { href: "/resumen-mensual", label: "Resumen", icon: "summary" as const },
   { href: "/historial", label: "Historial", icon: "history" as const },
@@ -49,7 +50,7 @@ export function MainNav() {
           </button>
         )}
       </div>
-      <nav className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">
+      <nav className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
         {visibleLinks.map((link) => {
           const isActive = pathname === link.href || pathname.startsWith(`${link.href}/`);
 

@@ -90,6 +90,71 @@ export type Database = {
         };
         Relationships: [];
       };
+      collar_products: {
+        Row: {
+          id: string;
+          user_id: string;
+          name: string;
+          selling_price: number;
+          cost_type: "manual" | "calculated";
+          manual_cost: number | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          name: string;
+          selling_price: number;
+          cost_type: "manual" | "calculated";
+          manual_cost?: number | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          user_id?: string;
+          name?: string;
+          selling_price?: number;
+          cost_type?: "manual" | "calculated";
+          manual_cost?: number | null;
+          created_at?: string;
+        };
+        Relationships: [];
+      };
+      collar_product_components: {
+        Row: {
+          id: string;
+          product_id: string;
+          name: string;
+          unit_cost: number;
+          quantity_used: number;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          product_id: string;
+          name: string;
+          unit_cost: number;
+          quantity_used: number;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          product_id?: string;
+          name?: string;
+          unit_cost?: number;
+          quantity_used?: number;
+          created_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "collar_product_components_product_id_fkey";
+            columns: ["product_id"];
+            isOneToOne: false;
+            referencedRelation: "collar_products";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       expenses: {
         Row: {
           id: string;
